@@ -21,3 +21,19 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    networks:
+      - kafka_network  # Menambahkan container ke network kustom
+  kafka-ui:
+    hostname: kafka-ui
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    environment:
+      - DYNAMIC_CONFIG_ENABLED=true
+    networks:
+      - kafka_network
+
+networks:
+  kafka_network:
+    driver: bridge  # Menggunakan bridge network untuk komunikasi antar container  
